@@ -1,6 +1,24 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { ArrowLeft, FileText, HelpCircle, Users, Settings, Eye, ChevronRight, Plus, Trash2, X, Type, CheckSquare, ToggleLeft, MessageSquare, Calendar, Save, Check } from "lucide-react";
+import {
+  ArrowLeft,
+  FileText,
+  HelpCircle,
+  Users,
+  Settings,
+  Eye,
+  ChevronRight,
+  Plus,
+  Trash2,
+  X,
+  Type,
+  CheckSquare,
+  ToggleLeft,
+  MessageSquare,
+  Calendar,
+  Save,
+  Check,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -13,31 +31,34 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Card } from "./ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "./ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar as CalendarComponent } from "./ui/calendar";
-import { format } from "date-fns@4.1.0";
+import { format } from "date-fns";
 
 interface CreateAssessmentProps {
   onBack: () => void;
   onNavigateToAssessments?: () => void;
 }
 
-export default function CreateAssessment({ onBack, onNavigateToAssessments }: CreateAssessmentProps) {
-  const [activeTab, setActiveTab] = useState<"details" | "tests" | "configuration">("details");
+export default function CreateAssessment({
+  onBack,
+  onNavigateToAssessments,
+}: CreateAssessmentProps) {
+  const [activeTab, setActiveTab] = useState<
+    "details" | "tests" | "configuration"
+  >("details");
   const [showPublishDialog, setShowPublishDialog] = useState(false);
   const [publishSuccess, setPublishSuccess] = useState(false);
-  const [publishType, setPublishType] = useState<"draft" | "publish">("publish");
+  const [publishType, setPublishType] = useState<"draft" | "publish">(
+    "publish",
+  );
 
   // Test Libraries State
   const [testLibraries, setTestLibraries] = useState<any[]>([]);
   const [additionalQuestions, setAdditionalQuestions] = useState<any[]>([]);
-  const [isQuestionTypeDialogOpen, setIsQuestionTypeDialogOpen] = useState(false);
+  const [isQuestionTypeDialogOpen, setIsQuestionTypeDialogOpen] =
+    useState(false);
   const [formData, setFormData] = useState({
     assessmentName: "",
     jobTitle: "",
@@ -55,8 +76,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
     passingScore: "70",
     questionOrder: "sequential",
   });
-  const [candidateDeadline, setCandidateDeadline] = useState<Date | undefined>(undefined);
-  const [assessmentExpiration, setAssessmentExpiration] = useState<Date | undefined>(undefined);
+  const [candidateDeadline, setCandidateDeadline] = useState<Date | undefined>(
+    undefined,
+  );
+  const [assessmentExpiration, setAssessmentExpiration] = useState<
+    Date | undefined
+  >(undefined);
 
   // Team Members State
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
@@ -83,14 +108,14 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
   ];
 
   const handleNext = () => {
-    const currentIndex = tabs.findIndex(tab => tab.id === activeTab);
+    const currentIndex = tabs.findIndex((tab) => tab.id === activeTab);
     if (currentIndex < tabs.length - 1) {
       setActiveTab(tabs[currentIndex + 1].id);
     }
   };
 
   const handlePrevious = () => {
-    const currentIndex = tabs.findIndex(tab => tab.id === activeTab);
+    const currentIndex = tabs.findIndex((tab) => tab.id === activeTab);
     if (currentIndex > 0) {
       setActiveTab(tabs[currentIndex - 1].id);
     }
@@ -117,8 +142,8 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
   const updateTestLibrary = (id: number, field: string, value: string) => {
     setTestLibraries(
       testLibraries.map((lib) =>
-        lib.id === id ? { ...lib, [field]: value } : lib
-      )
+        lib.id === id ? { ...lib, [field]: value } : lib,
+      ),
     );
   };
 
@@ -163,8 +188,8 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
   const updateTeamMember = (id: number, field: string, value: string) => {
     setTeamMembers(
       teamMembers.map((member) =>
-        member.id === id ? { ...member, [field]: value } : member
-      )
+        member.id === id ? { ...member, [field]: value } : member,
+      ),
     );
   };
 
@@ -254,18 +279,28 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                       <motion.div
                         layoutId="activeAssessmentTab"
                         className="absolute inset-0 bg-gradient-to-br from-blue-600 to-teal-500"
-                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        transition={{
+                          type: "spring",
+                          bounce: 0.2,
+                          duration: 0.6,
+                        }}
                       />
                     )}
                     <div className="relative flex items-start gap-3">
-                      <div className={`mt-0.5 ${isActive ? "text-white" : "text-blue-600"}`}>
+                      <div
+                        className={`mt-0.5 ${isActive ? "text-white" : "text-blue-600"}`}
+                      >
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className={`font-medium text-sm mb-1 ${isActive ? "text-white" : "text-slate-900"}`}>
+                        <div
+                          className={`font-medium text-sm mb-1 ${isActive ? "text-white" : "text-slate-900"}`}
+                        >
                           {tab.label}
                         </div>
-                        <div className={`text-xs leading-relaxed ${isActive ? "text-blue-100" : "text-slate-500"}`}>
+                        <div
+                          className={`text-xs leading-relaxed ${isActive ? "text-blue-100" : "text-slate-500"}`}
+                        >
                           {tab.description}
                         </div>
                       </div>
@@ -283,7 +318,9 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                     <HelpCircle className="w-4 h-4 text-amber-600" />
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-amber-900 mb-1">Need Help?</p>
+                    <p className="text-xs font-medium text-amber-900 mb-1">
+                      Need Help?
+                    </p>
                     <p className="text-[11px] text-amber-700 leading-relaxed">
                       Learn how to create effective assessments
                     </p>
@@ -303,11 +340,15 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                 {/* Card Header with Title and Buttons */}
                 <div className="px-8 py-5 bg-gradient-to-r from-blue-600/5 via-teal-500/5 to-blue-600/5 border-b border-blue-200/40 flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Assessment Details</h3>
-                    <p className="text-sm text-slate-600">Configure your assessment settings and information</p>
+                    <h3 className="font-semibold text-slate-900 mb-1">
+                      Assessment Details
+                    </h3>
+                    <p className="text-sm text-slate-600">
+                      Configure your assessment settings and information
+                    </p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Button 
+                    <Button
                       onClick={handleNext}
                       className="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white transition-all"
                     >
@@ -324,42 +365,67 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                     <div className="col-span-7 space-y-6">
                       {/* Assessment Name */}
                       <div className="space-y-3">
-                        <Label htmlFor="assessmentName" className="text-slate-700 text-sm font-medium">
-                          Assessment Name <span className="text-red-500">*</span>
+                        <Label
+                          htmlFor="assessmentName"
+                          className="text-slate-700 text-sm font-medium"
+                        >
+                          Assessment Name{" "}
+                          <span className="text-red-500">*</span>
                         </Label>
                         <Input
                           id="assessmentName"
                           placeholder="e.g., Senior Frontend Developer Assessment"
                           value={formData.assessmentName}
-                          onChange={(e) => setFormData({ ...formData, assessmentName: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              assessmentName: e.target.value,
+                            })
+                          }
                           className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30 focus:bg-white transition-colors"
                         />
                       </div>
 
                       {/* Job Title */}
                       <div className="space-y-3">
-                        <Label htmlFor="jobTitle" className="text-slate-700 text-sm font-medium">
+                        <Label
+                          htmlFor="jobTitle"
+                          className="text-slate-700 text-sm font-medium"
+                        >
                           Job Title <span className="text-red-500">*</span>
                         </Label>
                         <Input
                           id="jobTitle"
                           placeholder="e.g., Senior Frontend Developer"
                           value={formData.jobTitle}
-                          onChange={(e) => setFormData({ ...formData, jobTitle: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              jobTitle: e.target.value,
+                            })
+                          }
                           className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30 focus:bg-white transition-colors"
                         />
                       </div>
 
                       {/* Description */}
                       <div className="space-y-3">
-                        <Label htmlFor="description" className="text-slate-700 text-sm font-medium">
+                        <Label
+                          htmlFor="description"
+                          className="text-slate-700 text-sm font-medium"
+                        >
                           Description
                         </Label>
                         <Textarea
                           id="description"
                           placeholder="Provide a brief description of the assessment and what it evaluates..."
                           value={formData.description}
-                          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              description: e.target.value,
+                            })
+                          }
                           className="border-slate-200 focus:border-blue-500 focus:ring-blue-500 min-h-[130px] bg-slate-50/30 focus:bg-white transition-colors resize-none"
                         />
                       </div>
@@ -369,39 +435,59 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                     <div className="col-span-5 space-y-6">
                       {/* Department */}
                       <div className="space-y-3">
-                        <Label htmlFor="department" className="text-slate-700 text-sm font-medium">
+                        <Label
+                          htmlFor="department"
+                          className="text-slate-700 text-sm font-medium"
+                        >
                           Department
                         </Label>
                         <Select
                           value={formData.department}
-                          onValueChange={(value) => setFormData({ ...formData, department: value })}
+                          onValueChange={(value) =>
+                            setFormData({ ...formData, department: value })
+                          }
                         >
-                          <SelectTrigger id="department" className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30">
+                          <SelectTrigger
+                            id="department"
+                            className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30"
+                          >
                             <SelectValue placeholder="Select department" />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="engineering">Engineering</SelectItem>
+                            <SelectItem value="engineering">
+                              Engineering
+                            </SelectItem>
                             <SelectItem value="product">Product</SelectItem>
                             <SelectItem value="design">Design</SelectItem>
                             <SelectItem value="marketing">Marketing</SelectItem>
                             <SelectItem value="sales">Sales</SelectItem>
                             <SelectItem value="hr">Human Resources</SelectItem>
                             <SelectItem value="finance">Finance</SelectItem>
-                            <SelectItem value="operations">Operations</SelectItem>
+                            <SelectItem value="operations">
+                              Operations
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       {/* Level */}
                       <div className="space-y-3">
-                        <Label htmlFor="level" className="text-slate-700 text-sm font-medium">
+                        <Label
+                          htmlFor="level"
+                          className="text-slate-700 text-sm font-medium"
+                        >
                           Level
                         </Label>
                         <Select
                           value={formData.level}
-                          onValueChange={(value) => setFormData({ ...formData, level: value })}
+                          onValueChange={(value) =>
+                            setFormData({ ...formData, level: value })
+                          }
                         >
-                          <SelectTrigger id="level" className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30">
+                          <SelectTrigger
+                            id="level"
+                            className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30"
+                          >
                             <SelectValue placeholder="Select level" />
                           </SelectTrigger>
                           <SelectContent>
@@ -418,14 +504,22 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
 
                       {/* Work Type */}
                       <div className="space-y-3">
-                        <Label htmlFor="workType" className="text-slate-700 text-sm font-medium">
+                        <Label
+                          htmlFor="workType"
+                          className="text-slate-700 text-sm font-medium"
+                        >
                           Work Type
                         </Label>
                         <Select
                           value={formData.workType}
-                          onValueChange={(value) => setFormData({ ...formData, workType: value })}
+                          onValueChange={(value) =>
+                            setFormData({ ...formData, workType: value })
+                          }
                         >
-                          <SelectTrigger id="workType" className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30">
+                          <SelectTrigger
+                            id="workType"
+                            className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30"
+                          >
                             <SelectValue placeholder="Select work type" />
                           </SelectTrigger>
                           <SelectContent>
@@ -438,14 +532,22 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
 
                       {/* Location */}
                       <div className="space-y-3">
-                        <Label htmlFor="location" className="text-slate-700 text-sm font-medium">
+                        <Label
+                          htmlFor="location"
+                          className="text-slate-700 text-sm font-medium"
+                        >
                           Location
                         </Label>
                         <Input
                           id="location"
                           placeholder="e.g., San Francisco, CA"
                           value={formData.location}
-                          onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              location: e.target.value,
+                            })
+                          }
                           className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30 focus:bg-white transition-colors"
                         />
                       </div>
@@ -461,8 +563,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
               <Card className="bg-white border-slate-200/60 overflow-hidden">
                 <div className="px-8 py-5 bg-gradient-to-r from-blue-600/5 via-teal-500/5 to-blue-600/5 border-b border-blue-200/40 flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Test and Questions</h3>
-                    <p className="text-sm text-slate-600">Add tests and questions to evaluate candidates</p>
+                    <h3 className="font-semibold text-slate-900 mb-1">
+                      Test and Questions
+                    </h3>
+                    <p className="text-sm text-slate-600">
+                      Add tests and questions to evaluate candidates
+                    </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Button
@@ -472,7 +578,7 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                     >
                       Previous
                     </Button>
-                    <Button 
+                    <Button
                       onClick={handleNext}
                       className="bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white transition-all"
                     >
@@ -486,8 +592,10 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                   <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-xl p-6 space-y-8">
                     {/* Add Test Library Section */}
                     <div>
-                      <h3 className="font-medium text-slate-900 mb-4">Add test library</h3>
-                      
+                      <h3 className="font-medium text-slate-900 mb-4">
+                        Add test library
+                      </h3>
+
                       {/* Test Library Items */}
                       <div className="space-y-4 mb-4">
                         {testLibraries.map((library, index) => (
@@ -515,21 +623,38 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                               {/* Test Library */}
                               <div className="space-y-2">
                                 <Label className="text-slate-700 text-sm font-medium">
-                                  Test Library <span className="text-red-500">*</span>
+                                  Test Library{" "}
+                                  <span className="text-red-500">*</span>
                                 </Label>
                                 <Select
                                   value={library.testLibrary}
-                                  onValueChange={(value) => updateTestLibrary(library.id, "testLibrary", value)}
+                                  onValueChange={(value) =>
+                                    updateTestLibrary(
+                                      library.id,
+                                      "testLibrary",
+                                      value,
+                                    )
+                                  }
                                 >
                                   <SelectTrigger className="h-12 py-1 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30">
                                     <SelectValue placeholder="Select test library" />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="frontend">Frontend Developer Test</SelectItem>
-                                    <SelectItem value="backend">Backend Developer Test</SelectItem>
-                                    <SelectItem value="fullstack">Full Stack Test</SelectItem>
-                                    <SelectItem value="react">React Specialist Test</SelectItem>
-                                    <SelectItem value="nodejs">Node.js Test</SelectItem>
+                                    <SelectItem value="frontend">
+                                      Frontend Developer Test
+                                    </SelectItem>
+                                    <SelectItem value="backend">
+                                      Backend Developer Test
+                                    </SelectItem>
+                                    <SelectItem value="fullstack">
+                                      Full Stack Test
+                                    </SelectItem>
+                                    <SelectItem value="react">
+                                      React Specialist Test
+                                    </SelectItem>
+                                    <SelectItem value="nodejs">
+                                      Node.js Test
+                                    </SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>
@@ -537,14 +662,21 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                               {/* Question Count */}
                               <div className="space-y-2">
                                 <Label className="text-slate-700 text-sm font-medium">
-                                  Question Count (Max: 10) <span className="text-red-500">*</span>
+                                  Question Count (Max: 10){" "}
+                                  <span className="text-red-500">*</span>
                                 </Label>
                                 <Input
                                   type="number"
                                   min="0"
                                   max="10"
                                   value={library.questionCount}
-                                  onChange={(e) => updateTestLibrary(library.id, "questionCount", e.target.value)}
+                                  onChange={(e) =>
+                                    updateTestLibrary(
+                                      library.id,
+                                      "questionCount",
+                                      e.target.value,
+                                    )
+                                  }
                                   className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30 focus:bg-white transition-colors"
                                 />
                               </div>
@@ -552,19 +684,32 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                               {/* Selection Method */}
                               <div className="space-y-2">
                                 <Label className="text-slate-700 text-sm font-medium">
-                                  Selection Method <span className="text-red-500">*</span>
+                                  Selection Method{" "}
+                                  <span className="text-red-500">*</span>
                                 </Label>
                                 <Select
                                   value={library.selectionMethod}
-                                  onValueChange={(value) => updateTestLibrary(library.id, "selectionMethod", value)}
+                                  onValueChange={(value) =>
+                                    updateTestLibrary(
+                                      library.id,
+                                      "selectionMethod",
+                                      value,
+                                    )
+                                  }
                                 >
                                   <SelectTrigger className="h-12 py-1 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30">
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="random">Random Selection</SelectItem>
-                                    <SelectItem value="sequential">Sequential</SelectItem>
-                                    <SelectItem value="difficulty">By Difficulty</SelectItem>
+                                    <SelectItem value="random">
+                                      Random Selection
+                                    </SelectItem>
+                                    <SelectItem value="sequential">
+                                      Sequential
+                                    </SelectItem>
+                                    <SelectItem value="difficulty">
+                                      By Difficulty
+                                    </SelectItem>
                                   </SelectContent>
                                 </Select>
                               </div>
@@ -578,7 +723,13 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                                   type="number"
                                   min="0"
                                   value={library.extraTime}
-                                  onChange={(e) => updateTestLibrary(library.id, "extraTime", e.target.value)}
+                                  onChange={(e) =>
+                                    updateTestLibrary(
+                                      library.id,
+                                      "extraTime",
+                                      e.target.value,
+                                    )
+                                  }
                                   className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30 focus:bg-white transition-colors"
                                 />
                               </div>
@@ -602,8 +753,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                     {/* Additional Questions Section */}
                     <div>
                       <div className="mb-4">
-                        <h3 className="font-medium text-slate-900">Additional Questions</h3>
-                        <p className="text-sm text-slate-500 mt-1">Pre-screening questions (max 5)</p>
+                        <h3 className="font-medium text-slate-900">
+                          Additional Questions
+                        </h3>
+                        <p className="text-sm text-slate-500 mt-1">
+                          Pre-screening questions (max 5)
+                        </p>
                       </div>
 
                       {/* Additional Questions Items */}
@@ -626,7 +781,9 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                                 />
                               </div>
                               <button
-                                onClick={() => deleteAdditionalQuestion(question.id)}
+                                onClick={() =>
+                                  deleteAdditionalQuestion(question.id)
+                                }
                                 className="p-2 hover:bg-red-50 rounded-lg transition-colors group mt-6"
                               >
                                 <X className="w-4 h-4 text-slate-400 group-hover:text-red-500" />
@@ -659,8 +816,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
               <Card className="bg-white border-slate-200/60 overflow-hidden">
                 <div className="px-8 py-5 bg-gradient-to-r from-blue-600/5 via-teal-500/5 to-blue-600/5 border-b border-blue-200/40 flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Configuration</h3>
-                    <p className="text-sm text-slate-600">Configure assessment settings and preferences</p>
+                    <h3 className="font-semibold text-slate-900 mb-1">
+                      Configuration
+                    </h3>
+                    <p className="text-sm text-slate-600">
+                      Configure assessment settings and preferences
+                    </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Button
@@ -685,8 +846,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                     {/* Timing & Attempts Section */}
                     <div className="bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-xl p-6">
                       <div className="mb-6">
-                        <h3 className="font-medium text-slate-900 mb-1">Timing & Attempts</h3>
-                        <p className="text-sm text-slate-500">Configure time limits and attempt settings</p>
+                        <h3 className="font-medium text-slate-900 mb-1">
+                          Timing & Attempts
+                        </h3>
+                        <p className="text-sm text-slate-500">
+                          Configure time limits and attempt settings
+                        </p>
                       </div>
 
                       <div className="grid grid-cols-2 gap-6">
@@ -699,7 +864,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                             type="number"
                             min="0"
                             value={configData.totalTimeLimit}
-                            onChange={(e) => setConfigData({ ...configData, totalTimeLimit: e.target.value })}
+                            onChange={(e) =>
+                              setConfigData({
+                                ...configData,
+                                totalTimeLimit: e.target.value,
+                              })
+                            }
                             className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30 focus:bg-white transition-colors"
                           />
                         </div>
@@ -713,7 +883,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                             type="number"
                             min="1"
                             value={configData.attemptsAllowed}
-                            onChange={(e) => setConfigData({ ...configData, attemptsAllowed: e.target.value })}
+                            onChange={(e) =>
+                              setConfigData({
+                                ...configData,
+                                attemptsAllowed: e.target.value,
+                              })
+                            }
                             className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30 focus:bg-white transition-colors"
                           />
                         </div>
@@ -728,7 +903,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                             min="0"
                             max="100"
                             value={configData.passingScore}
-                            onChange={(e) => setConfigData({ ...configData, passingScore: e.target.value })}
+                            onChange={(e) =>
+                              setConfigData({
+                                ...configData,
+                                passingScore: e.target.value,
+                              })
+                            }
                             className="h-12 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30 focus:bg-white transition-colors"
                           />
                         </div>
@@ -740,15 +920,24 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                           </Label>
                           <Select
                             value={configData.questionOrder}
-                            onValueChange={(value) => setConfigData({ ...configData, questionOrder: value })}
+                            onValueChange={(value) =>
+                              setConfigData({
+                                ...configData,
+                                questionOrder: value,
+                              })
+                            }
                           >
                             <SelectTrigger className="h-12 py-1 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="sequential">Sequential</SelectItem>
+                              <SelectItem value="sequential">
+                                Sequential
+                              </SelectItem>
                               <SelectItem value="random">Random</SelectItem>
-                              <SelectItem value="difficulty">By Difficulty</SelectItem>
+                              <SelectItem value="difficulty">
+                                By Difficulty
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -760,8 +949,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                       {/* Candidate Deadline Card */}
                       <div className="bg-white rounded-xl p-6 border border-slate-200/60">
                         <div className="mb-4">
-                          <h3 className="font-medium text-slate-900 mb-1">Candidate Deadline</h3>
-                          <p className="text-sm text-slate-500">Set deadline for invited candidates</p>
+                          <h3 className="font-medium text-slate-900 mb-1">
+                            Candidate Deadline
+                          </h3>
+                          <p className="text-sm text-slate-500">
+                            Set deadline for invited candidates
+                          </p>
                         </div>
 
                         <div className="space-y-2">
@@ -771,13 +964,24 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                           <Popover>
                             <PopoverTrigger asChild>
                               <button className="h-12 w-full flex items-center justify-between px-3 py-1 text-sm border border-slate-200 rounded-md bg-slate-50/30 hover:bg-white transition-colors focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-[3px]">
-                                <span className={candidateDeadline ? "text-slate-900" : "text-slate-400"}>
-                                  {candidateDeadline ? format(candidateDeadline, "PPP") : "Pick a date"}
+                                <span
+                                  className={
+                                    candidateDeadline
+                                      ? "text-slate-900"
+                                      : "text-slate-400"
+                                  }
+                                >
+                                  {candidateDeadline
+                                    ? format(candidateDeadline, "PPP")
+                                    : "Pick a date"}
                                 </span>
                                 <Calendar className="w-4 h-4 text-slate-400" />
                               </button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent
+                              className="w-auto p-0"
+                              align="start"
+                            >
                               <CalendarComponent
                                 mode="single"
                                 selected={candidateDeadline}
@@ -792,24 +996,40 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                       {/* Assessment Expiration Card */}
                       <div className="bg-white rounded-xl p-6 border border-slate-200/60">
                         <div className="mb-4">
-                          <h3 className="font-medium text-slate-900 mb-1">Assessment Expiration</h3>
-                          <p className="text-sm text-slate-500">Set expiration for share link users</p>
+                          <h3 className="font-medium text-slate-900 mb-1">
+                            Assessment Expiration
+                          </h3>
+                          <p className="text-sm text-slate-500">
+                            Set expiration for share link users
+                          </p>
                         </div>
 
                         <div className="space-y-2">
                           <Label className="text-slate-700 text-sm font-medium">
-                            Expiration Date <span className="text-red-500">*</span>
+                            Expiration Date{" "}
+                            <span className="text-red-500">*</span>
                           </Label>
                           <Popover>
                             <PopoverTrigger asChild>
                               <button className="h-12 w-full flex items-center justify-between px-3 py-1 text-sm border border-slate-200 rounded-md bg-slate-50/30 hover:bg-white transition-colors focus:outline-none focus:border-blue-500 focus:ring-blue-500 focus:ring-[3px]">
-                                <span className={assessmentExpiration ? "text-slate-900" : "text-slate-400"}>
-                                  {assessmentExpiration ? format(assessmentExpiration, "PPP") : "Pick a date"}
+                                <span
+                                  className={
+                                    assessmentExpiration
+                                      ? "text-slate-900"
+                                      : "text-slate-400"
+                                  }
+                                >
+                                  {assessmentExpiration
+                                    ? format(assessmentExpiration, "PPP")
+                                    : "Pick a date"}
                                 </span>
                                 <Calendar className="w-4 h-4 text-slate-400" />
                               </button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent
+                              className="w-auto p-0"
+                              align="start"
+                            >
                               <CalendarComponent
                                 mode="single"
                                 selected={assessmentExpiration}
@@ -832,16 +1052,24 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
               <Card className="bg-white border-slate-200/60 overflow-hidden">
                 <div className="px-8 py-5 bg-gradient-to-r from-blue-600/5 via-teal-500/5 to-blue-600/5 border-b border-blue-200/40 flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold text-slate-900 mb-1">Team and Publishing</h3>
-                    <p className="text-sm text-slate-600">Assign team members and publish the assessment</p>
+                    <h3 className="font-semibold text-slate-900 mb-1">
+                      Team and Publishing
+                    </h3>
+                    <p className="text-sm text-slate-600">
+                      Assign team members and publish the assessment
+                    </p>
                   </div>
                 </div>
                 <div className="px-8 pb-8 pt-6">
                   {/* Team Access Section */}
                   <div className="bg-white rounded-xl border border-slate-200/60 p-6">
                     <div className="mb-6">
-                      <h3 className="font-medium text-slate-900 mb-1">Team Access</h3>
-                      <p className="text-sm text-slate-500">Manage who can access this assessment</p>
+                      <h3 className="font-medium text-slate-900 mb-1">
+                        Team Access
+                      </h3>
+                      <p className="text-sm text-slate-500">
+                        Manage who can access this assessment
+                      </p>
                     </div>
 
                     {/* Team Members List */}
@@ -857,16 +1085,26 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                           <div className="flex-1">
                             <Select
                               value={member.member}
-                              onValueChange={(value) => updateTeamMember(member.id, "member", value)}
+                              onValueChange={(value) =>
+                                updateTeamMember(member.id, "member", value)
+                              }
                             >
                               <SelectTrigger className="h-12 py-1 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30">
                                 <SelectValue placeholder="Select member" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="ramesh.subramanian+2006">ramesh.subramanian+2006</SelectItem>
-                                <SelectItem value="john.doe@example.com">john.doe@example.com</SelectItem>
-                                <SelectItem value="jane.smith@example.com">jane.smith@example.com</SelectItem>
-                                <SelectItem value="mike.johnson@example.com">mike.johnson@example.com</SelectItem>
+                                <SelectItem value="ramesh.subramanian+2006">
+                                  ramesh.subramanian+2006
+                                </SelectItem>
+                                <SelectItem value="john.doe@example.com">
+                                  john.doe@example.com
+                                </SelectItem>
+                                <SelectItem value="jane.smith@example.com">
+                                  jane.smith@example.com
+                                </SelectItem>
+                                <SelectItem value="mike.johnson@example.com">
+                                  mike.johnson@example.com
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
@@ -875,7 +1113,9 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                           <div className="flex-1">
                             <Select
                               value={member.role}
-                              onValueChange={(value) => updateTeamMember(member.id, "role", value)}
+                              onValueChange={(value) =>
+                                updateTeamMember(member.id, "role", value)
+                              }
                             >
                               <SelectTrigger className="h-12 py-1 border-slate-200 focus:border-blue-500 focus:ring-blue-500 bg-slate-50/30">
                                 <SelectValue placeholder="Role" />
@@ -937,7 +1177,10 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
       </div>
 
       {/* Question Type Dialog */}
-      <Dialog open={isQuestionTypeDialogOpen} onOpenChange={setIsQuestionTypeDialogOpen}>
+      <Dialog
+        open={isQuestionTypeDialogOpen}
+        onOpenChange={setIsQuestionTypeDialogOpen}
+      >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <div className="flex items-start justify-between">
@@ -951,7 +1194,7 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
               </div>
             </div>
           </DialogHeader>
-          
+
           <div className="grid grid-cols-2 gap-4 mt-6">
             {/* Short Text */}
             <motion.button
@@ -964,7 +1207,9 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                 <Type className="w-6 h-6 text-blue-600" />
               </div>
               <h4 className="font-semibold text-slate-900 mb-1">Short Text</h4>
-              <p className="text-sm text-slate-600">Single line text response</p>
+              <p className="text-sm text-slate-600">
+                Single line text response
+              </p>
             </motion.button>
 
             {/* Multiple Choice */}
@@ -977,7 +1222,9 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
               <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-teal-100 to-teal-50 flex items-center justify-center mb-4 group-hover:from-teal-200 group-hover:to-teal-100 transition-all">
                 <CheckSquare className="w-6 h-6 text-teal-600" />
               </div>
-              <h4 className="font-semibold text-slate-900 mb-1">Multiple Choice</h4>
+              <h4 className="font-semibold text-slate-900 mb-1">
+                Multiple Choice
+              </h4>
               <p className="text-sm text-slate-600">Select one from options</p>
             </motion.button>
 
@@ -1024,7 +1271,8 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                 transition={{ duration: 0.5 }}
                 className="absolute inset-0"
                 style={{
-                  backgroundImage: "radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.04) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%)"
+                  backgroundImage:
+                    "radial-gradient(circle at 20% 50%, rgba(34, 197, 94, 0.04) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%)",
                 }}
               />
             </div>
@@ -1040,7 +1288,12 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.1, type: "spring", stiffness: 200, damping: 15 }}
+                  transition={{
+                    delay: 0.1,
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 15,
+                  }}
                   className="w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 mx-auto flex items-center justify-center shadow-lg shadow-green-100/50"
                 >
                   <motion.div
@@ -1051,7 +1304,7 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                     <Check className="w-12 h-12 text-white" strokeWidth={3} />
                   </motion.div>
                 </motion.div>
-                
+
                 {/* Animated Ring */}
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -1064,7 +1317,7 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                   className="absolute inset-0 rounded-full border-4 border-green-300/30"
                 />
               </div>
-              
+
               {/* Success Message */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
@@ -1072,11 +1325,13 @@ export default function CreateAssessment({ onBack, onNavigateToAssessments }: Cr
                 transition={{ delay: 0.4, duration: 0.5 }}
               >
                 <h3 className="text-2xl font-semibold text-slate-900 mb-3">
-                  {publishType === "draft" ? "Assessment Saved as Draft!" : "Assessment Published Successfully!"}
+                  {publishType === "draft"
+                    ? "Assessment Saved as Draft!"
+                    : "Assessment Published Successfully!"}
                 </h3>
                 <p className="text-slate-600">
-                  {publishType === "draft" 
-                    ? "Your assessment has been saved and can be completed later." 
+                  {publishType === "draft"
+                    ? "Your assessment has been saved and can be completed later."
                     : "Your assessment is now ready and published."}
                 </p>
               </motion.div>
